@@ -143,6 +143,7 @@ test('reduced motion and keyboard activation remain usable', async ({ page }) =>
   await card.focus()
   await page.keyboard.press('Enter')
   await expectHouse(page)
+  await expect(page.getByRole('heading', { name: houseName, exact: true })).toBeFocused()
   await page.getByRole('link', { name: 'Все дома', exact: true }).focus()
   await page.keyboard.press('Enter')
   await expectCatalog(page)

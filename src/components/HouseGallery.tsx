@@ -1,10 +1,17 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { House } from '../data/houses'
 import { Arrow } from './Arrow'
+import { PhotoViewer } from './PhotoViewer'
 import styles from './HouseGallery.module.css'
 
 export function HouseGallery({ house }: { house: House }) {
   const rail = useRef<HTMLDivElement>(null)
+  const [openedPhoto, setOpenedPhoto] = useState<number | null>(null)
+  const sourceAt = useCallback(
+    (index: number) => rail.current?.children[index]?.querySelector('button') ?? undefined,
+    [],
+  )
+  const closeViewer = useCallback(() => setOpenedPhoto(null), [])
   const [navigation, setNavigation] = useState({
     active: 0,
     canPrevious: false,
@@ -75,6 +82,7 @@ export function HouseGallery({ house }: { house: House }) {
       </div>
       <div
         ref={rail}
+        data-photo-rail
         className={styles.rail}
         tabIndex={0}
         role="region"
@@ -82,14 +90,21 @@ export function HouseGallery({ house }: { house: House }) {
       >
         {house.gallery.map((photo, index) => (
           <figure key={photo.src} className={styles.photo}>
-            <img
-              src={photo.src}
-              alt={photo.alt}
-              loading="lazy"
-              decoding="async"
-              width={photo.width}
-              height={photo.height}
-            />
+            <button
+              className={styles.openPhoto}
+              aria-label={`Открыть фото: ${photo.alt}`}
+              aria-haspopup="dialog"
+              onClick={() => setOpenedPhoto(index)}
+            >
+              <img
+                src={photo.src}
+                alt={photo.alt}
+                loading="lazy"
+                decoding="async"
+                width={photo.width}
+                height={photo.height}
+              />
+            </button>
             <figcaption>
               <span>{String(index + 1).padStart(2, '0')}</span>
               {photo.alt.split(':')[0]}
@@ -123,6 +138,14 @@ export function HouseGallery({ house }: { house: House }) {
         Здесь — настоящие фотографии интерьера, предоставленные для примера. Профессиональные
         фотографии появятся позже.
       </p>
+      {openedPhoto !== null && (
+        <PhotoViewer
+          photos={house.gallery}
+          initialIndex={openedPhoto}
+          sourceAt={sourceAt}
+          onClose={closeViewer}
+        />
+      )}
     </section>
   )
 }
