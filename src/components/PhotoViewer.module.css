@@ -1,0 +1,97 @@
+.dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  color: #edf0ec;
+  background: transparent;
+}
+.dialog::backdrop {
+  background: transparent;
+}
+.background,
+.gesture {
+  position: absolute;
+  inset: 0;
+}
+.background {
+  background: #101916;
+}
+.gesture {
+  touch-action: pinch-zoom;
+}
+.image {
+  position: absolute;
+  display: block;
+  object-fit: contain;
+  user-select: none;
+}
+.controls {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.controls button {
+  pointer-events: auto;
+}
+.close {
+  position: absolute;
+  top: max(16px, env(safe-area-inset-top));
+  right: max(20px, env(safe-area-inset-right));
+  width: 48px;
+  height: 48px;
+  border: 1px solid #68776f;
+  border-radius: 50%;
+  color: inherit;
+  background: #101916;
+  font-size: 22px;
+}
+.bottom {
+  position: absolute;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  left: max(20px, env(safe-area-inset-left));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.caption {
+  flex: 1 1 180px;
+  min-width: 0;
+  margin: 0;
+  max-width: 65ch;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.caption span {
+  display: block;
+  margin-bottom: 6px;
+  font-variant-numeric: tabular-nums;
+  color: #b5c4ba;
+}
+.navigation {
+  display: flex;
+  flex-shrink: 0;
+  margin-left: auto;
+  gap: 10px;
+}
+.navigation button {
+  border-color: #68776f;
+}
+@media (max-width: 700px) {
+  .bottom {
+    gap: 12px;
+  }
+  .caption {
+    font-size: 11px;
+  }
+}

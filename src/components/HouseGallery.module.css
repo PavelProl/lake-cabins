@@ -53,6 +53,14 @@
   object-fit: contain;
   border-radius: 14px;
 }
+.openPhoto {
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  cursor: zoom-in;
+}
 .photo figcaption {
   display: flex;
   min-width: 0;
