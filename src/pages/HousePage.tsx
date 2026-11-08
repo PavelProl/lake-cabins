@@ -22,7 +22,7 @@ export function HousePage({ house, visualRef, hidden }: HousePageProps) {
         </a>
       </section>
       <section id="about-house" className={styles.about} aria-labelledby="about-heading">
-        <p className="eyebrow">01 / {house.category}</p>
+        <p className="eyebrow">{house.category}</p>
         <div className={styles.aboutBody}>
           <h2 id="about-heading">
             Пространство
@@ -30,10 +30,7 @@ export function HousePage({ house, visualRef, hidden }: HousePageProps) {
             для своих.
           </h2>
           <div>
-            <p>
-              Бревенчатые стены, тёплая фактура дерева и комнаты, которые хочется рассмотреть. Ниже
-              — фотографии настоящего интерьера большого дома.
-            </p>
+            <p>{house.description}</p>
             <p className={styles.pending}>
               Вместимость, стоимость и условия проживания уточняются у владельцев.
             </p>
@@ -49,8 +46,7 @@ export function HousePage({ house, visualRef, hidden }: HousePageProps) {
         </Link>
         <p>
           Временная обложка сгенерирована.
-          <br />
-          Интерьер в галерее — настоящий.
+          <br />В галерее — реальные фотографии дома.
         </p>
       </footer>
     </article>

@@ -72,7 +72,7 @@ export function HouseGallery({ house }: { house: House }) {
     <section className={styles.gallery} aria-labelledby="gallery-heading">
       <div className={styles.heading}>
         <div>
-          <p className="eyebrow">Внутри дома</p>
+          <p className="eyebrow">Дом в деталях</p>
           <h2 id="gallery-heading">
             Рассмотреть
             <br />
@@ -86,7 +86,7 @@ export function HouseGallery({ house }: { house: House }) {
         className={styles.rail}
         tabIndex={0}
         role="region"
-        aria-label="Фотографии интерьера, можно прокручивать по горизонтали"
+        aria-label="Фотографии дома, можно прокручивать по горизонтали"
       >
         {house.gallery.map((photo, index) => (
           <figure key={photo.src} className={styles.photo}>
@@ -135,8 +135,8 @@ export function HouseGallery({ house }: { house: House }) {
         </button>
       </div>
       <p className={styles.note}>
-        Здесь — настоящие фотографии интерьера, предоставленные для примера. Профессиональные
-        фотографии появятся позже.
+        Здесь — реальные фотографии дома и интерьера, подготовленные для сайта. Профессиональная
+        съёмка появится позже.
       </p>
       {openedPhoto !== null && (
         <PhotoViewer
