@@ -1,0 +1,76 @@
+.card {
+  display: block;
+  position: relative;
+  height: min(780px, 82svh);
+  min-height: 480px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--forest);
+  text-decoration: none;
+}
+.card [data-shade] {
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card:hover [data-shade],
+.card:focus-visible [data-shade] {
+  background-color: rgb(0 0 0 / 34%);
+}
+.open {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--lime);
+  color: var(--ink);
+  transform: translate(-50%, -50%) scale(0.7);
+  opacity: 0;
+  transition:
+    transform 0.3s,
+    opacity 0.3s;
+  pointer-events: none;
+}
+.card:hover .open,
+.card:focus-visible .open {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+.mobileLink {
+  display: none;
+}
+
+@media (max-width: 899px), (hover: none) {
+  .card {
+    height: 76svh;
+    min-height: 540px;
+  }
+  .open {
+    display: none;
+  }
+  .mobileLink {
+    position: absolute;
+    top: 72%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    color: white;
+    font-size: 12px;
+  }
+  .mobileLink svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .open,
+  .card [data-shade] {
+    transition: none;
+  }
+}

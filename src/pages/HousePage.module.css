@@ -1,0 +1,98 @@
+.hero {
+  height: 100svh;
+  min-height: 540px;
+  position: relative;
+  background: var(--forest);
+}
+.down {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+}
+.about {
+  padding: 120px var(--gutter) 140px;
+  scroll-margin-top: 100px;
+}
+.aboutBody {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8vw;
+  margin-top: 38px;
+}
+.about h2 {
+  font-size: clamp(48px, 6.5vw, 92px);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+  margin: 0;
+}
+.aboutBody > div {
+  max-width: 460px;
+  padding-top: 4px;
+}
+.aboutBody p {
+  margin: 0;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+}
+.aboutBody p.pending {
+  margin-top: 28px;
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0;
+  line-height: 1.6;
+}
+.footer {
+  background: var(--forest);
+  color: var(--paper);
+  padding: 60px var(--gutter) 40px;
+}
+.return {
+  display: block;
+  text-decoration: none;
+  margin-top: 60px;
+  width: fit-content;
+  font-size: clamp(54px, 8vw, 120px);
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+.return svg {
+  width: 0.6em;
+  height: 0.6em;
+  margin-left: 0.1em;
+}
+.footer > p {
+  font-size: 11px;
+  line-height: 1.6;
+  opacity: 0.6;
+  margin: 70px 0 0;
+}
+
+@media (max-width: 700px) {
+  .hero {
+    min-height: 600px;
+  }
+  .down {
+    bottom: 88px;
+  }
+  .about {
+    padding-top: 80px;
+    padding-bottom: 90px;
+  }
+  .aboutBody {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .aboutBody p {
+    font-size: 20px;
+  }
+  .footer {
+    padding-top: 40px;
+  }
+  .return {
+    margin-top: 44px;
+  }
+}
