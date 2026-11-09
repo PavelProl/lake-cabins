@@ -1,6 +1,5 @@
 .hero {
-  height: 100svh;
-  min-height: 540px;
+  height: 100dvh;
   position: relative;
   background: var(--forest);
 }
@@ -17,24 +16,24 @@
 }
 .aboutBody {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 8vw;
   margin-top: 38px;
 }
 .about h2 {
-  font-size: clamp(56px, 7.4vw, 108px);
+  font-size: clamp(40px, 4.8vw, 88px);
   font-weight: 400;
   letter-spacing: -0.055em;
   line-height: 0.98;
   margin: 0;
 }
 .aboutBody > div {
-  max-width: 460px;
+  max-width: 560px;
   padding-top: 4px;
 }
 .aboutBody p {
   margin: 0;
-  font-size: clamp(22px, 2.2vw, 32px);
+  font-size: clamp(20px, 1.7vw, 26px);
   line-height: 1.4;
   letter-spacing: -0.025em;
 }
@@ -46,42 +45,46 @@
   line-height: 1.6;
 }
 @media (max-width: 700px) {
-  .hero {
-    min-height: 600px;
-  }
   .down {
     bottom: 88px;
   }
+}
+.about {
+  padding-bottom: 80px;
+}
+.aboutBody > * {
+  min-width: 0;
+}
+@media (max-width: 960px) {
   .about {
     padding-top: 80px;
-    padding-bottom: 90px;
+    padding-bottom: 56px;
   }
   .aboutBody {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 30px;
+  }
+  .aboutBody > div {
+    max-width: 620px;
+  }
+  .about h2 {
+    font-size: clamp(32px, 8.4vw, 64px);
   }
   .aboutBody p {
     font-size: 20px;
   }
 }
 
-.about {
-  padding-bottom: 80px;
+.divider {
+  display: flex;
+  justify-content: center;
+  padding: 8px var(--gutter) 64px;
+  color: var(--muted);
 }
-@media (max-width: 700px) {
-  .about {
-    padding-bottom: 56px;
-  }
+.divider svg {
+  width: clamp(200px, 34vw, 480px);
+  height: 48px;
 }
-
-.aboutBody > * {
-  min-width: 0;
-}
-@media (max-width: 700px) {
-  .aboutBody {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .about h2 {
-    font-size: clamp(38px, 10.8vw, 64px);
-  }
+.divider path {
+  vector-effect: non-scaling-stroke;
 }

@@ -31,6 +31,7 @@
   font-variant-numeric: tabular-nums;
 }
 .rail {
+  --photo-max-width: calc(100vw - 2 * var(--gutter) - 24px);
   display: flex;
   align-items: start;
   gap: 24px;
@@ -40,27 +41,26 @@
   padding-bottom: 20px;
 }
 .photo {
-  display: grid;
-  grid-template-columns: min-content;
+  width: min(calc(min(52svh, 480px) * var(--photo-ratio)), var(--photo-max-width));
   flex: 0 0 auto;
   margin: 0;
   min-width: 0;
 }
 .photo img {
   display: block;
-  width: auto;
-  max-width: calc(100vw - 2 * var(--gutter) - 24px);
-  height: auto;
-  max-height: min(52svh, 480px);
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   border-radius: 14px;
 }
 .openPhoto {
+  width: 100%;
+  aspect-ratio: var(--photo-ratio);
   display: block;
   padding: 0;
   border: 0;
   border-radius: 14px;
-  background: transparent;
+  background: var(--line);
   cursor: zoom-in;
 }
 .photo figcaption {
@@ -118,8 +118,8 @@
   .controls > button:nth-of-type(2) {
     right: 0;
   }
-  .photo img {
-    max-width: calc(100vw - 2 * var(--gutter) - 128px);
+  .rail {
+    --photo-max-width: calc(100vw - 2 * var(--gutter) - 128px);
   }
 }
 

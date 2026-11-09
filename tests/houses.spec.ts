@@ -81,3 +81,24 @@ for (const house of cases) {
     await expect(page.getByRole('heading', { name: house.name, exact: true })).toBeVisible()
   })
 }
+
+test('all galleries reserve photo space and keep short captions when images cannot load', async ({
+  page,
+}) => {
+  await page.route('**/*.jpg', (route) => route.abort())
+  await page.setViewportSize({ width: 390, height: 844 })
+  for (const id of ['large-log-house', 'medium-house', 'small-house']) {
+    await page.goto(`/houses/${id}`)
+    await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
+    const photos = page.locator('[data-photo-rail] figure')
+    for (const figure of await photos.all()) {
+      const box = (await figure.boundingBox())!
+      expect(box.width).toBeGreaterThan(150)
+      const caption = figure.locator('figcaption')
+      expect((await caption.boundingBox())!.height).toBeLessThan(90)
+      await expect(caption).not.toContainText(/(?:больш|средн|мал)[а-я]+ дом/i)
+      const image = (await figure.locator('img').boundingBox())!
+      expect(image.height).toBeGreaterThan(150)
+    }
+  }
+})

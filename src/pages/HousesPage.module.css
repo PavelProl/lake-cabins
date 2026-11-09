@@ -237,7 +237,7 @@
 }
 .placeBody {
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   gap: 7vw;
   margin-top: 32px;
 }
@@ -603,4 +603,17 @@
 .marqueeGroup {
   min-width: 100vw;
   justify-content: space-around;
+}
+
+.placeBody > * {
+  min-width: 0;
+}
+@media (max-width: 960px) {
+  .placeBody {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+  }
+  .place h2 {
+    font-size: clamp(32px, 8.4vw, 64px);
+  }
 }

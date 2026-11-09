@@ -151,7 +151,7 @@ test('nature sound starts only on request and toggles off', async ({ page }) => 
   expect(await sound.evaluate((audio: HTMLAudioElement) => audio.paused)).toBe(true)
 })
 
-test('house details keep opposite captions, a slim amenities ribbon and a return below the photos', async ({
+test('house details keep opposite captions, a centered separator and a return below the photos', async ({
   page,
 }) => {
   for (const width of [1440, 390]) {
@@ -161,9 +161,11 @@ test('house details keep opposite captions, a slim amenities ribbon and a return
     const left = (await page.locator('[data-caption-left]').boundingBox())!
     const right = (await page.locator('[data-caption-right]').boundingBox())!
     expect(left.x + left.width).toBeLessThan(right.x)
-    const ribbon = page.getByLabel(/^Удобства: Wi-Fi/)
-    await ribbon.scrollIntoViewIfNeeded()
-    expect((await ribbon.boundingBox())!.height).toBeLessThan(65)
+    const separator = page.getByRole('separator')
+    await separator.scrollIntoViewIfNeeded()
+    const line = (await separator.locator('svg').boundingBox())!
+    expect(line.width).toBeGreaterThanOrEqual(200)
+    expect(Math.abs(line.x + line.width / 2 - width / 2)).toBeLessThan(10)
     await page.screenshot({ path: `/private/tmp/lake-cabins-browser/amenities-${width}.png` })
     const back = page.getByRole('link', { name: 'Вернуться к домам', exact: true })
     await back.scrollIntoViewIfNeeded()

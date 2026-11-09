@@ -330,7 +330,7 @@ export function PhotoViewer({ photos, initialIndex, sourceAt, onClose }: PhotoVi
             <span>
               {String(index + 1).padStart(2, '0')} / {String(photos.length).padStart(2, '0')}
             </span>
-            {photo.alt}
+            {photo.caption}
           </p>
           <div className={styles.navigation}>
             <button

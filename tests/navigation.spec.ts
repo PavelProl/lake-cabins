@@ -233,11 +233,11 @@ test('return from the house footer restores the catalog scroll and focus', async
 })
 
 test('Forward during closing cancels the overlay and allows another return', async ({ page }) => {
+  await page.clock.install()
   await page.goto('/')
   await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   await page.locator('#house-large-log-house').click()
   await expectHouse(page)
-  await page.clock.install()
   await page.clock.pauseAt(new Date(Date.now() + 1000))
   await page.goBack()
   await expect(page.locator('[data-transition-phase]')).toHaveAttribute(
@@ -268,4 +268,33 @@ test('enabling reduced motion during opening finishes and cleans up the transiti
   await expectHouse(page)
   await expect(page.getByRole('heading', { name: houseName, exact: true })).toBeFocused()
   await expect.poll(() => page.evaluate(() => document.documentElement.style.overflow)).toBe('')
+})
+
+test('browser panel height changes do not cut opening short or change the final image size', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 700 })
+  await page.clock.install()
+  await page.goto('/')
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
+  await page.locator('#house-large-log-house').scrollIntoViewIfNeeded()
+  await page.clock.pauseAt(new Date(Date.now() + 1000))
+  await page.locator('#house-large-log-house').click()
+  await page.clock.runFor(150)
+  await page.setViewportSize({ width: 390, height: 844 })
+  await expect(page.locator('[data-transition-phase]')).toHaveAttribute(
+    'data-transition-phase',
+    'opening',
+  )
+  let lastHeight = 0
+  for (let frame = 0; frame < 120; frame++) {
+    const overlay = page.locator('[data-transition-layer] [data-house-visual]')
+    if (!(await overlay.count())) break
+    lastHeight = (await overlay.boundingBox())!.height
+    await page.clock.runFor(16)
+  }
+  await expectHouse(page)
+  const hero = (await page.locator('h1').locator('..').boundingBox())!
+  expect(Math.abs(lastHeight - hero.height)).toBeLessThan(2)
+  expect(hero.height).toBe(844)
 })

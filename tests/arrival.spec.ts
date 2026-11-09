@@ -107,7 +107,8 @@ test('sound hint cannot interrupt the return curtain', async ({ page }) => {
   await page.clock.install()
   await page.clock.pauseAt(new Date(Date.now() + 1000))
   await page.getByRole('link', { name: 'Все дома', exact: true }).click()
-  await page.clock.runFor(1000)
+  await expect(page.getByRole('heading', { name: 'Лад', level: 1, exact: true })).toBeVisible()
+  await page.clock.runFor(200)
   await expect(page.locator('[data-transition-phase]')).toHaveAttribute(
     'data-transition-phase',
     'closing',

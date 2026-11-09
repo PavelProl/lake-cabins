@@ -263,7 +263,7 @@ export function App() {
                   key={displayedHouse.id}
                   house={displayedHouse}
                   visualRef={visualRef}
-                  hidden={busy}
+                  hidden={transition?.direction === 'opening'}
                 />
               ) : (
                 <MissingHouse />

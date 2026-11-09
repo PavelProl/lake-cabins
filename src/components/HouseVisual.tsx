@@ -29,7 +29,8 @@ export function HouseVisual({
         src={house.cover}
         style={{ objectPosition: `${house.coverPosition}% center` }}
         alt={`Сгенерированная концепция: ${house.name} в лесу, не фотография базы`}
-        fetchPriority="high"
+        fetchPriority={Heading === 'h2' ? 'auto' : 'high'}
+        loading={Heading === 'h2' ? 'lazy' : 'eager'}
         decoding="async"
         width="1672"
         height="941"

@@ -1,11 +1,11 @@
 import { expect, test } from '@playwright/test'
 
-test('amenities cover the viewport throughout the full ribbon cycle', async ({ page }) => {
+test('home ribbon covers the viewport throughout the full cycle', async ({ page }) => {
   for (const width of [1440, 2560, 390]) {
     await page.setViewportSize({ width, height: 900 })
-    await page.goto('/houses/medium-house', { waitUntil: 'domcontentloaded' })
+    await page.goto('/', { waitUntil: 'domcontentloaded' })
     await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
-    const ribbon = page.getByLabel(/^Удобства: Wi-Fi/)
+    const ribbon = page.getByLabel(/^Тишина у озера · Домики среди природы/)
     for (const progress of [0, 0.5, 0.9999, 1.0001]) {
       const covered = await ribbon.evaluate(async (element, fraction) => {
         const track = element.firstElementChild!
@@ -44,13 +44,13 @@ test('house copy rises into place and the footer never stays hidden', async ({ p
   await page.screenshot({ path: '/private/tmp/lake-cabins-browser/revealed-footer.png' })
 })
 
-test('reduced motion keeps text and ribbon readable without animation', async ({ page }) => {
+test('reduced motion keeps house text readable and its separator static', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto('/houses/medium-house', { waitUntil: 'domcontentloaded' })
   await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   await expect(page.locator('#about-house p[data-reveal]').nth(1)).toHaveCSS('opacity', '1')
-  const ribbon = page.getByLabel(/^Удобства: Wi-Fi/)
-  await expect(ribbon.locator('div').first()).toHaveCSS('animation-name', 'none')
+  await expect(page.getByLabel(/^Удобства: Wi-Fi/)).toHaveCount(0)
+  await expect(page.getByRole('separator')).toHaveCSS('animation-name', 'none')
   await expect(page.getByRole('contentinfo').locator('[data-reveal]').first()).toHaveCSS(
     'opacity',
     '1',

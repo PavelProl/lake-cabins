@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import type { House } from '../data/houses'
@@ -90,7 +91,11 @@ export function HouseGallery({ house }: { house: House }) {
           aria-label="Фотографии дома, можно прокручивать по горизонтали"
         >
           {house.gallery.map((photo, index) => (
-            <figure key={photo.src} className={styles.photo}>
+            <figure
+              key={photo.src}
+              className={styles.photo}
+              style={{ '--photo-ratio': photo.width / photo.height } as CSSProperties}
+            >
               <button
                 className={styles.openPhoto}
                 aria-label={`Открыть фото: ${photo.alt}`}
@@ -108,7 +113,7 @@ export function HouseGallery({ house }: { house: House }) {
               </button>
               <figcaption>
                 <span>{String(index + 1).padStart(2, '0')}</span>
-                {photo.alt.split(':')[0]}
+                {photo.caption}
               </figcaption>
             </figure>
           ))}

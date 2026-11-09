@@ -32,10 +32,9 @@ test('guest copy, published contacts and map point are consistent on home and ho
     const href = await whatsapp.getAttribute('href')
     const name = await page.locator('h1').getAttribute('aria-label')
     expect(decodeURIComponent(href!)).toContain(`«${name}»`)
-    await expect(page.getByRole('link', { name: 'Позвонить ↗' })).toHaveAttribute(
-      'href',
-      'tel:+79659036548',
-    )
+    await expect(
+      page.locator('#about-house').getByRole('link', { name: 'Позвонить ↗' }),
+    ).toHaveAttribute('href', 'tel:+79659036548')
   }
 })
 
