@@ -84,24 +84,24 @@ test('buttons and keyboard navigate to both edges and close onto the current pho
   await expect(previous).toBeDisabled()
   await expectFitted(page)
   await expect(modal).toHaveAttribute('aria-busy', 'false')
-  for (let index = 1; index < 4; index++) {
+  for (let index = 1; index < 9; index++) {
     await expect(next).toBeEnabled()
     await next.click()
-    await expect(modal.locator('[aria-live]')).toContainText(`0${index + 1} / 04`)
+    await expect(modal.locator('[aria-live]')).toContainText(`0${index + 1} / 09`)
     await expectFitted(page)
     // Wait for the incoming image to finish fading before requesting another change.
     await expect(modal.getByRole('img')).toHaveCSS('opacity', '1')
   }
   await expect(next).toBeDisabled()
   await page.keyboard.press('ArrowRight')
-  await expect(modal.locator('[aria-live]')).toContainText('04 / 04')
+  await expect(modal.locator('[aria-live]')).toContainText('09 / 09')
   await page.keyboard.press('ArrowLeft')
-  await expect(modal.locator('[aria-live]')).toContainText('03 / 04')
+  await expect(modal.locator('[aria-live]')).toContainText('08 / 09')
   await expect(modal.getByRole('img')).toHaveCSS('opacity', '1')
   await modal.getByRole('button', { name: 'Закрыть просмотр' }).click()
   await expect(modal).toHaveCount(0)
-  await expect(photoButtons(page).nth(2)).toBeFocused()
-  await expect(photoButtons(page).nth(2)).toBeInViewport()
+  await expect(photoButtons(page).nth(7)).toBeFocused()
+  await expect(photoButtons(page).nth(7)).toBeInViewport()
   expect(Math.abs((await page.evaluate(() => scrollY)) - scroll)).toBeLessThan(2)
 })
 
@@ -171,7 +171,7 @@ test('resizing and enabling reduced motion settle opening and closing transition
   await expectFitted(page)
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.keyboard.press('ArrowRight')
-  await expect(viewer(page).locator('[aria-live]')).toContainText('02 / 04')
+  await expect(viewer(page).locator('[aria-live]')).toContainText('02 / 09')
   await expectFitted(page)
   await page.keyboard.press('Escape')
   await expect(viewer(page)).toHaveCount(0)
@@ -199,11 +199,11 @@ test('horizontal swipe changes the photo; vertical gestures do not', async ({ pa
     await session.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] })
   }
   await swipe(-100, 8)
-  await expect(viewer(page).locator('[aria-live]')).toContainText('02 / 04')
+  await expect(viewer(page).locator('[aria-live]')).toContainText('02 / 09')
   await swipe(4, 120)
-  await expect(viewer(page).locator('[aria-live]')).toContainText('02 / 04')
+  await expect(viewer(page).locator('[aria-live]')).toContainText('02 / 09')
   await swipe(100, -5)
-  await expect(viewer(page).locator('[aria-live]')).toContainText('01 / 04')
+  await expect(viewer(page).locator('[aria-live]')).toContainText('01 / 09')
   await page.keyboard.press('Escape')
   await expect(viewer(page)).toHaveCount(0)
 })
@@ -212,7 +212,7 @@ test('route navigation while viewing removes the modal and restores page styles'
   page,
 }) => {
   await page.goto('/')
-  await page.locator('[data-house-card]').click()
+  await page.locator('#house-large-log-house').click()
   await expect(
     page.getByRole('heading', { name: 'Большой бревенчатый дом', exact: true }),
   ).toBeVisible()
@@ -227,16 +227,11 @@ test('route navigation while viewing removes the modal and restores page styles'
 })
 
 test('a landscape photo fits without cropping in the same viewer', async ({ page }) => {
-  // Exercise the existing gallery with a landscape fixture; production materials stay unchanged.
-  await page.route('**/src/data/houses.ts', async (route) => {
-    const response = await route.fetch()
-    const body = (await response.text())
-      .replace('src: living,', 'src: cover,')
-      .replace('width: 960,', 'width: 1672,')
-      .replace('height: 1280', 'height: 941')
-    await route.fulfill({ response, body })
-  })
-  await openPhoto(page)
+  await page.goto('/houses/medium-house')
+  const photo = photoButtons(page).first()
+  await photo.scrollIntoViewIfNeeded()
+  await photo.click()
+  await expect(viewer(page)).toHaveAttribute('aria-busy', 'false')
   await expect
     .poll(() =>
       viewer(page)
@@ -266,11 +261,11 @@ test('reduced motion during a photo change completes the requested selection', a
       )
     })
     .toBeLessThan(0.99)
-  await expect(modal.locator('[aria-live]')).toContainText('01 / 04')
+  await expect(modal.locator('[aria-live]')).toContainText('01 / 09')
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.clock.runFor(32)
   await expect(modal).toHaveAttribute('aria-busy', 'false')
-  await expect(modal.locator('[aria-live]')).toContainText('02 / 04')
+  await expect(modal.locator('[aria-live]')).toContainText('02 / 09')
   await expectFitted(page)
   await page.keyboard.press('Escape')
   await page.clock.runFor(32)

@@ -32,6 +32,7 @@
 }
 .rail {
   display: flex;
+  align-items: start;
   gap: 24px;
   overflow-x: auto;
   overscroll-behavior-x: contain;
@@ -49,7 +50,8 @@
   display: block;
   width: auto;
   max-width: calc(100vw - 2 * var(--gutter) - 24px);
-  height: min(52svh, 480px);
+  height: auto;
+  max-height: min(52svh, 480px);
   object-fit: contain;
   border-radius: 14px;
 }

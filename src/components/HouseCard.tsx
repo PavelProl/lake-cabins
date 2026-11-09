@@ -12,7 +12,7 @@ gsap.registerPlugin(useGSAP)
 
 interface HouseCardProps {
   house: House
-  visualRef: RefObject<HTMLDivElement | null>
+  visualRef?: RefObject<HTMLDivElement | null>
   busy: boolean
   hidden: boolean
 }

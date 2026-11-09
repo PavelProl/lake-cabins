@@ -43,9 +43,13 @@ export function App() {
     if (location.key === displayedLocation.key) return
 
     const nextHouse = houseAt(location.pathname)
-    const source = visualRef.current
     const opening = displayedLocation.pathname === '/' && nextHouse
     const closing = displayedHouse && location.pathname === '/'
+    const source = opening
+      ? document
+          .getElementById(`house-${nextHouse.id}`)
+          ?.querySelector<HTMLElement>('[data-house-visual]')
+      : visualRef.current
 
     if (source && (opening || closing)) {
       if (opening) returnScroll.current = window.scrollY
@@ -97,7 +101,9 @@ export function App() {
       <a className="skip-link" href="#main">
         Перейти к содержимому
       </a>
-      <header className={`${styles.header} ${displayedHouse ? styles.overImage : ''}`}>
+      <header
+        className={`${styles.header} ${displayedHouse || displayedLocation.pathname === '/' ? styles.overImage : ''}`}
+      >
         <Link
           to="/"
           className={styles.brand}
@@ -137,12 +143,22 @@ export function App() {
       </header>
       <main id="main" tabIndex={-1} aria-busy={busy}>
         <Routes location={displayedLocation}>
-          <Route path="/" element={<HousesPage visualRef={visualRef} busy={busy} />} />
+          <Route
+            path="/"
+            element={
+              <HousesPage visualRef={visualRef} activeHouseId={transition?.house.id} busy={busy} />
+            }
+          />
           <Route
             path="/houses/:id"
             element={
               displayedHouse ? (
-                <HousePage house={displayedHouse} visualRef={visualRef} hidden={busy} />
+                <HousePage
+                  key={displayedHouse.id}
+                  house={displayedHouse}
+                  visualRef={visualRef}
+                  hidden={busy}
+                />
               ) : (
                 <MissingHouse />
               )

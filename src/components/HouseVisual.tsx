@@ -27,7 +27,8 @@ export function HouseVisual({
       <img
         className={styles.image}
         src={house.cover}
-        alt="Сгенерированная концепция бревенчатого дома среди сосен, не фотография базы"
+        style={{ objectPosition: `${house.coverPosition}% center` }}
+        alt={`Сгенерированная концепция: ${house.name} в лесу, не фотография базы`}
         fetchPriority="high"
         decoding="async"
         width="1672"
