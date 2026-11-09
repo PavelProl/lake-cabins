@@ -2,7 +2,7 @@
   min-height: 100svh;
 }
 .header {
-  position: absolute;
+  position: fixed;
   inset: 0 0 auto;
   z-index: 40;
   padding: 32px var(--gutter);
@@ -10,6 +10,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+  transition:
+    background-color 0.25s ease,
+    box-shadow 0.25s ease,
+    padding 0.25s ease;
 }
 .brand {
   display: flex;
@@ -23,31 +27,66 @@
   letter-spacing: -0.05em;
 }
 .symbol {
-  width: 48px;
-  height: 48px;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
-  padding: 0 10px;
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
 }
-.symbol span {
-  height: 1px;
-  width: 100%;
-  background: currentColor;
-  transform: rotate(-12deg);
+.brand {
+  font-family: var(--heading-font);
+  font-size: 36px;
+  letter-spacing: -0.035em;
+  line-height: 1;
 }
-.symbol span:nth-child(2) {
-  width: 70%;
-  align-self: end;
+.brand small {
+  display: block;
+  font:
+    14px/1.4 Onest,
+    sans-serif;
+  letter-spacing: 0;
+  margin-top: 6px;
 }
-.prototype {
+.call {
   margin-left: auto;
-  font-size: 10px;
-  color: var(--muted);
-  margin-right: 26px;
+  color: var(--ink);
+  font-size: 16px;
+  text-decoration: none;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  min-height: 52px;
+  padding: 14px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+.call:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.overImage .call:hover {
+  color: var(--ink);
+  background: var(--paper);
+  border-color: var(--paper);
+}
+.solidHeader {
+  padding-block: 14px;
+  background: rgb(237 240 236 / 96%);
+
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 3px 20px rgb(8 20 16 / 6%);
+}
+.solidHeader .brand,
+.solidHeader .call {
+  color: var(--ink);
+}
+.solidHeader .call:hover {
+  color: var(--paper);
+}
+
+.overImage .call {
+  color: white;
 }
 .nav {
   min-height: 52px;
@@ -59,7 +98,18 @@
   gap: 30px;
   align-items: center;
   text-decoration: none;
-  font-size: 12px;
+  font-size: 16px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+.nav:hover {
+  background: var(--forest);
+  color: white;
+}
+.overImage .nav:hover {
+  background: var(--lime);
+  color: var(--ink);
 }
 .nav svg {
   width: 25px;
@@ -67,9 +117,6 @@
 }
 .overImage .brand {
   color: white;
-}
-.overImage .prototype {
-  color: rgb(255 255 255 / 70%);
 }
 .overImage .nav {
   color: var(--ink);
@@ -97,24 +144,180 @@
   }
   .brand {
     gap: 9px;
-    font-size: 14px;
+    font-size: 28px;
   }
   .symbol {
     width: 38px;
     height: 38px;
-    padding-inline: 8px;
   }
-  .prototype {
+  .call {
     display: none;
+  }
+  .brand small {
+    font-size: 12px;
   }
   .nav {
     padding-inline: 15px;
     min-height: 44px;
     gap: 14px;
-    font-size: 10px;
+    font-size: 14px;
   }
   .nav svg {
     width: 22px;
     height: 22px;
+  }
+}
+
+@media (max-width: 700px) {
+  .solidHeader {
+    padding-block: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .call,
+  .nav {
+    transition: none;
+  }
+}
+
+.overImage {
+  background: rgb(13 31 24 / 14%);
+
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
+}
+.header .call {
+  margin-left: 0;
+}
+@media (max-width: 380px) {
+  .header {
+    gap: 8px;
+  }
+  .brand {
+    font-size: 25px;
+    gap: 6px;
+  }
+  .brand small {
+    display: none;
+  }
+  .nav {
+    gap: 8px;
+    padding-inline: 12px;
+    font-size: 13px;
+  }
+  .nav svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.header {
+  color: var(--ink);
+}
+.overImage {
+  color: white;
+}
+.solidHeader {
+  color: var(--ink);
+}
+
+.header {
+  padding-block: 20px;
+}
+.brand,
+.nav {
+  flex-shrink: 0;
+}
+.brand small,
+.nav {
+  white-space: nowrap;
+}
+@media (max-width: 700px) {
+  .header {
+    padding-block: 16px;
+  }
+}
+.solidHeader {
+  padding-block: 14px;
+}
+@media (max-width: 700px) {
+  .solidHeader {
+    padding-block: 12px;
+  }
+}
+@media (max-width: 380px) {
+  .nav svg {
+    display: none;
+  }
+}
+
+/* Keep the header edge quiet and cross-fade its two color schemes. */
+.header {
+  border-bottom: 0;
+  transition:
+    background-color 0.45s ease,
+    color 0.4s ease,
+    box-shadow 0.45s ease,
+    padding 0.45s ease;
+}
+.overImage {
+  background: rgb(8 20 16 / 20%);
+  border-bottom: 0;
+  box-shadow: none;
+}
+.solidHeader {
+  border-bottom: 0;
+}
+.brand,
+.call,
+.nav {
+  transition:
+    color 0.4s ease,
+    background-color 0.4s ease,
+    border-color 0.4s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .brand,
+  .call,
+  .nav {
+    transition: none;
+  }
+}
+
+/* Fade independent background layers instead of switching a hard-edged header fill. */
+.header {
+  background: transparent;
+  isolation: isolate;
+  box-shadow: none;
+}
+.header::before,
+.header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  transition: opacity 0.65s ease;
+}
+.header::before {
+  bottom: -38px;
+  background: linear-gradient(180deg, rgb(8 20 16 / 24%), rgb(8 20 16 / 15%) 55%, transparent);
+  opacity: 0;
+}
+.header::after {
+  background: rgb(237 240 236 / 96%);
+  opacity: 1;
+}
+.overImage::before {
+  opacity: 1;
+}
+.overImage::after {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .header::before,
+  .header::after {
+    transition: none;
   }
 }

@@ -19,65 +19,77 @@
 .introImage {
   object-fit: cover;
   object-position: 53% center;
+  filter: brightness(1.1);
 }
 .intro::after {
   content: '';
-  background: linear-gradient(
-    180deg,
-    rgb(8 20 16 / 62%) 0%,
-    rgb(8 20 16 / 10%) 32%,
-    rgb(8 20 16 / 30%) 55%,
-    rgb(8 20 16 / 82%) 100%
-  );
+  background:
+    linear-gradient(90deg, rgb(8 20 16 / 28%) 0%, rgb(8 20 16 / 20%) 42%, transparent 78%),
+    linear-gradient(
+      180deg,
+      rgb(8 20 16 / 42%) 0%,
+      rgb(8 20 16 / 5%) 32%,
+      rgb(8 20 16 / 12%) 55%,
+      rgb(8 20 16 / 58%) 100%
+    );
 }
 .location {
-  margin-bottom: 100px;
+  margin-bottom: 60px;
 }
 .intro h1 {
   margin: auto 0 0;
-  font-size: clamp(70px, 9.7vw, 140px);
+  font-size: clamp(64px, 8.8vw, 132px);
   font-weight: 400;
   line-height: 0.98;
-  letter-spacing: -0.065em;
+  letter-spacing: -0.045em;
 }
 .intro h1 span {
   color: inherit;
 }
 .introBottom {
   margin-top: 32px;
+  margin-bottom: 100px;
   display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 32px;
+  justify-content: flex-end;
 }
 .introBottom p {
   width: 34%;
   min-width: 270px;
   margin: 0;
+  font-family: var(--heading-font);
   font-size: clamp(18px, 1.7vw, 25px);
   line-height: 1.4;
   letter-spacing: -0.025em;
 }
 .scrollLink {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
   display: inline-flex;
+  flex-direction: column-reverse;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+  white-space: nowrap;
   text-decoration: none;
   color: inherit;
-  font-size: 11px;
+  font-size: 16px;
 }
 .scrollLink svg {
   width: 42px;
   height: 42px;
 }
 .concept {
-  margin: 32px 0 0;
-  font-size: 10px;
+  position: absolute;
+  left: var(--gutter);
+  bottom: 22px;
+  margin: 0;
+  font-size: 11px;
   line-height: 1.5;
   color: rgb(255 255 255 / 85%);
 }
 .houses {
-  padding: 90px var(--gutter) 0;
+  padding: 64px var(--gutter) 0;
   scroll-margin-top: 110px;
 }
 .sectionHeading {
@@ -90,14 +102,13 @@
   margin-top: 90px;
 }
 .sectionHeading h2 {
-  font-size: 12px;
+  font-size: clamp(24px, 2.5vw, 34px);
   font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: -0.025em;
   margin: 0;
 }
 .sectionHeading > span {
-  font-size: 11px;
+  font-size: 18px;
   color: var(--muted);
 }
 .caption {
@@ -105,7 +116,7 @@
   align-items: center;
   justify-content: space-between;
   margin: 20px 0 0;
-  font-size: 12px;
+  font-size: 16px;
   color: var(--muted);
 }
 .caption span:last-child {
@@ -117,39 +128,17 @@
   width: 22px;
   height: 22px;
 }
-.footer {
-  padding: 150px var(--gutter) 30px;
-}
-.footer > p {
-  font-size: clamp(44px, 6.5vw, 96px);
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: -0.055em;
-  margin: 0 0 100px;
-}
-.footer > p span {
-  color: var(--muted);
-}
-.footer > div {
-  display: flex;
-  justify-content: space-between;
-  border-top: 1px solid var(--line);
-  padding-top: 24px;
-  font-size: 11px;
-  color: var(--muted);
-}
-
 @media (max-width: 700px) {
   .intro {
     padding: 120px var(--gutter) 22px;
   }
   .location {
-    font-size: 9px;
+    font-size: 13px;
     letter-spacing: 0.05em;
-    margin-bottom: 150px;
+    margin-bottom: 60px;
   }
   .intro h1 {
-    font-size: clamp(60px, 12.7vw, 90px);
+    font-size: clamp(44px, 11.7vw, 80px);
   }
   .introBottom {
     margin-top: 26px;
@@ -164,15 +153,15 @@
     margin-top: 4px;
   }
   .scrollLink span {
-    display: none;
+    display: inline;
   }
   .scrollLink svg {
     width: 32px;
     height: 32px;
   }
   .concept {
-    margin-top: 26px;
-    font-size: 9px;
+    margin-top: 0;
+    font-size: 11px;
   }
   .houses {
     padding-top: 60px;
@@ -181,14 +170,14 @@
     margin-bottom: 18px;
   }
   .sectionHeading h2 {
-    font-size: 10px;
+    font-size: 24px;
   }
   .sectionHeading > span {
-    font-size: 9px;
+    font-size: 16px;
   }
   .caption {
     align-items: start;
-    font-size: 10px;
+    font-size: 16px;
   }
   .houseEntry + .houseEntry {
     margin-top: 60px;
@@ -196,23 +185,422 @@
   .caption span:last-child {
     font-size: 0;
   }
-  .footer {
+}
+
+.introDescription {
+  font-family: var(--heading-font);
+  font-size: clamp(18px, 1.7vw, 24px);
+  line-height: 1.5;
+  margin: 28px 0 0;
+}
+.marquee {
+  overflow: hidden;
+  margin-top: 54px;
+  background: #fff;
+  color: var(--forest);
+  padding: 14px 0;
+}
+.marqueeTrack {
+  display: flex;
+  width: max-content;
+  animation: drift 85s linear infinite;
+}
+.marqueeGroup {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding-right: 32px;
+  flex-shrink: 0;
+}
+.marqueeItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 32px;
+  white-space: nowrap;
+  font-family: var(--heading-font);
+  font-size: clamp(18px, 1.65vw, 24px);
+  line-height: 1.5;
+}
+.marqueeItem svg {
+  width: 25px;
+  height: 28px;
+  flex-shrink: 0;
+  opacity: 0.75;
+}
+@keyframes drift {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.place {
+  padding: 140px var(--gutter);
+}
+.placeBody {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 7vw;
+  margin-top: 32px;
+}
+.place h2,
+.locationSection h2,
+.invitation h2 {
+  margin: 0;
+  font-size: clamp(38px, 5.6vw, 80px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+}
+.place h2 > span + span {
+  color: var(--muted);
+}
+.placeBody p {
+  font-size: 20px;
+  line-height: 1.6;
+  margin: 0 0 22px;
+}
+.locationSection {
+  padding: 80px var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 6vw;
+  background: #dfe6dc;
+  scroll-margin-top: 110px;
+}
+.locationSection h2 {
+  margin: 26px 0;
+}
+.locationInfo > p:not(:first-child) {
+  max-width: 42ch;
+  line-height: 1.65;
+}
+.map {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--paper);
+}
+.invitation {
+  padding: 120px var(--gutter);
+}
+.invitation h2 {
+  margin-top: 28px;
+}
+.invitation > p:not(:first-child) {
+  font-size: 20px;
+  line-height: 1.6;
+  max-width: 46ch;
+}
+@media (max-width: 700px) {
+  .intro {
+    padding-top: 130px;
+  }
+  .introBottom p {
+    font-size: 16px;
+  }
+  .introDescription {
+    margin-top: 24px;
+  }
+  .intro :global(.contact-actions) {
+    flex-direction: column;
+    align-items: start;
+  }
+  .intro :global(.button-primary),
+  .intro :global(.button-secondary) {
+    min-height: 48px;
+  }
+  .marquee {
+    padding-block: 12px;
+    margin-top: 36px;
+  }
+  .place,
+  .invitation {
+    padding: 80px var(--gutter);
+  }
+  .placeBody,
+  .locationSection {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .placeBody p {
+    font-size: 18px;
+  }
+  .locationSection {
+    padding: 60px var(--gutter);
+  }
+  .map {
+    min-height: 360px;
+  }
+}
+@media (max-width: 700px) {
+  .introBottom {
+    margin-bottom: 116px;
+  }
+  .introBottom p {
+    width: 100%;
+    text-align: right;
+  }
+  .scrollLink {
+    bottom: 44px;
+    font-size: 15px;
+  }
+  .concept {
+    bottom: 14px;
+  }
+  .sectionHeading {
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack {
+    animation: none;
+    width: auto;
+  }
+  .marqueeGroup {
+    flex-wrap: wrap;
+    padding: 0 var(--gutter);
+    gap: 16px;
+  }
+  .marqueeGroup + .marqueeGroup {
+    display: none;
+  }
+  .marqueeItem {
+    white-space: normal;
+    gap: 16px;
+  }
+}
+
+/* Fit the opening composition to the visible viewport, including laptop windows. */
+.intro {
+  height: 100svh;
+  min-height: 0;
+  padding-top: clamp(104px, 15svh, 150px);
+  padding-bottom: clamp(105px, 15svh, 150px);
+}
+.location {
+  margin-bottom: clamp(14px, 4svh, 40px);
+  flex-shrink: 0;
+}
+.intro h1 {
+  font-size: clamp(44px, min(8.8vw, 13.2svh), 132px);
+  flex-shrink: 0;
+}
+.introDescription {
+  margin-top: clamp(14px, 2.8svh, 28px);
+  font-size: clamp(17px, min(1.7vw, 2.8svh), 24px);
+  flex-shrink: 0;
+}
+.intro :global(.contact-actions) {
+  margin-top: clamp(16px, 3svh, 28px);
+  flex-shrink: 0;
+}
+.introBottom {
+  margin-top: clamp(16px, 3svh, 32px);
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+.introBottom p {
+  font-size: clamp(17px, min(1.7vw, 2.8svh), 25px);
+}
+.place {
+  padding: 96px var(--gutter) 24px;
+}
+@media (max-width: 700px) {
+  .intro {
+    padding-top: 108px;
+    padding-bottom: 118px;
+  }
+  .location {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  .intro h1 {
+    font-size: clamp(34px, min(11.7vw, 7.4svh), 72px);
+  }
+  .introDescription {
+    font-size: clamp(16px, 2.3svh, 20px);
+    line-height: 1.4;
+  }
+  .intro :global(.contact-actions) {
+    flex-direction: row;
+    gap: 8px;
+  }
+  .intro :global(.button-primary),
+  .intro :global(.button-secondary) {
+    font-size: 14px;
+    padding: 11px 14px;
+    min-height: 44px;
+  }
+  .introBottom {
+    margin-top: 20px;
+  }
+  .introBottom p {
+    font-size: 16px;
+  }
+  .place {
+    padding: 64px var(--gutter) 8px;
+  }
+}
+@media (max-height: 650px) and (min-width: 701px) {
+  .intro {
     padding-top: 100px;
+    padding-bottom: 76px;
   }
-  .footer > p {
-    margin-bottom: 80px;
+  .location {
+    font-size: 12px;
+    margin-bottom: 10px;
   }
-  .footer > div {
+  .intro h1 {
+    font-size: min(8vw, 11.5svh);
+  }
+  .introDescription {
+    font-size: 16px;
+    margin-top: 12px;
+    line-height: 1.35;
+  }
+  .intro :global(.contact-actions) {
+    margin-top: 14px;
+  }
+  .intro :global(.button-primary),
+  .intro :global(.button-secondary) {
+    min-height: 42px;
+    padding: 10px 18px;
+    font-size: 14px;
+  }
+  .introBottom {
+    margin-top: 12px;
+  }
+  .introBottom p {
+    font-size: 16px;
+  }
+  .scrollLink {
+    bottom: 14px;
+    gap: 6px;
+    font-size: 14px;
+  }
+  .scrollLink svg {
+    width: 28px;
+    height: 28px;
+  }
+  .concept {
+    bottom: 12px;
+    font-size: 10px;
+  }
+}
+@media (max-height: 650px) and (max-width: 700px) {
+  .intro {
+    padding-top: 94px;
+    padding-bottom: 96px;
+  }
+  .location {
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+  .intro h1 {
+    font-size: clamp(30px, 6.8svh, 42px);
+  }
+  .introDescription {
+    font-size: 15px;
+    margin-top: 12px;
+  }
+  .intro :global(.contact-actions) {
+    margin-top: 14px;
+  }
+  .intro :global(.button-primary),
+  .intro :global(.button-secondary) {
+    font-size: 13px;
+    padding-inline: 10px;
+  }
+  .introBottom {
+    margin-top: 12px;
+  }
+  .introBottom p {
+    font-size: 14px;
+  }
+  .scrollLink {
+    bottom: 32px;
+    gap: 6px;
+    font-size: 13px;
+  }
+  .scrollLink svg {
+    width: 26px;
+    height: 26px;
+  }
+  .concept {
+    bottom: 10px;
+    font-size: 10px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .intro {
+    padding-top: 96px;
+    padding-bottom: 76px;
+  }
+  .location {
+    display: none;
+  }
+  .intro h1 {
+    font-size: min(8vw, 10svh);
+  }
+  .introDescription {
+    font-size: 15px;
+    margin-top: 10px;
+  }
+  .intro :global(.contact-actions) {
+    margin-top: 12px;
+  }
+  .introBottom {
+    margin: 0;
+  }
+  .introBottom p {
+    position: absolute;
+    right: var(--gutter);
+    bottom: 26px;
+    width: 24%;
+    min-width: 0;
+    font-size: 13px;
+  }
+  .scrollLink {
+    bottom: 14px;
+    font-size: 13px;
+    gap: 5px;
+  }
+  .scrollLink svg {
+    width: 26px;
+    height: 26px;
+  }
+  .concept {
+    bottom: 10px;
     font-size: 9px;
   }
 }
 
-@media (max-height: 600px) {
-  .concept {
-    position: absolute;
-    top: 100px;
-    left: var(--gutter);
-    right: var(--gutter);
-    margin: 0;
+.houses {
+  padding-bottom: clamp(72px, 8vw, 112px);
+}
+.intro {
+  padding-left: calc(var(--gutter) + 8px);
+}
+@media (max-width: 700px) {
+  .houses {
+    padding-bottom: 64px;
   }
+  .intro {
+    padding-left: calc(var(--gutter) + 4px);
+  }
+}
+
+@media (min-width: 901px) {
+  .intro {
+    padding-left: calc(var(--gutter) + 28px);
+  }
+}
+
+.marqueeGroup {
+  min-width: 100vw;
+  justify-content: space-around;
 }

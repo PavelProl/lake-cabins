@@ -1,5 +1,28 @@
+@font-face {
+  font-family: Lora;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/lora-regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: Onest;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/onest-regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: Onest;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/onest-medium.ttf') format('truetype');
+}
 :root {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: Onest, sans-serif;
+  font-size: 17px;
+  --heading-font: Lora, Georgia, serif;
   color: #1c2926;
   background: #edf0ec;
   font-synthesis: none;
@@ -51,7 +74,7 @@ h1[tabindex='-1']:focus {
   outline: none;
 }
 .eyebrow {
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -87,5 +110,59 @@ h1[tabindex='-1']:focus {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+}
+
+h1,
+h2 {
+  font-family: var(--heading-font);
+}
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+.button-primary,
+.button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  padding: 15px 24px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 16px;
+  line-height: 1.4;
+  border: 1px solid transparent;
+}
+.button-primary {
+  background: var(--lime);
+  color: var(--ink);
+}
+.button-secondary {
+  color: inherit;
+  border-color: currentColor;
+}
+.button-primary:hover {
+  background: #d1e9b5;
+}
+.button-secondary:hover {
+  background: rgb(127 150 130 / 12%);
+}
+.text-link {
+  display: block;
+  width: fit-content;
+  margin-top: 18px;
+  text-underline-offset: 5px;
+  line-height: 1.5;
+}
+@media (max-width: 700px) {
+  .contact-actions {
+    gap: 10px;
+  }
+  .button-primary,
+  .button-secondary {
+    padding: 14px 18px;
   }
 }

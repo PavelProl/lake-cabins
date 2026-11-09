@@ -1,8 +1,10 @@
 import type { RefObject } from 'react'
-import { Link } from 'react-router'
 import type { House } from '../data/houses'
+import { RevealHeading } from '../components/RevealHeading'
 import { HouseVisual } from '../components/HouseVisual'
 import { HouseGallery } from '../components/HouseGallery'
+import { ContactLinks } from '../components/ContactLinks'
+import { AmenitiesRibbon } from '../components/AmenitiesRibbon'
 import { Arrow } from '../components/Arrow'
 import styles from './HousePage.module.css'
 
@@ -22,33 +24,23 @@ export function HousePage({ house, visualRef, hidden }: HousePageProps) {
         </a>
       </section>
       <section id="about-house" className={styles.about} aria-labelledby="about-heading">
-        <p className="eyebrow">{house.category}</p>
+        <p className="eyebrow" data-reveal>
+          {house.category}
+        </p>
         <div className={styles.aboutBody}>
-          <h2 id="about-heading">
-            Пространство
-            <br />
-            для своих.
-          </h2>
+          <RevealHeading id="about-heading" lines={['Пространство', 'для своих.']} />
           <div>
-            <p>{house.description}</p>
-            <p className={styles.pending}>
-              Вместимость, стоимость и условия проживания уточняются у владельцев.
+            <p data-reveal>{house.description}</p>
+            <p className={styles.pending} data-reveal>
+              Позвоните нам: подскажем, подойдёт ли дом для вашей компании, уточним стоимость,
+              свободные даты и условия проживания.
             </p>
+            <ContactLinks houseName={house.name} />
           </div>
         </div>
       </section>
+      <AmenitiesRibbon />
       <HouseGallery house={house} />
-      <footer className={styles.footer}>
-        <span className="eyebrow">Домики у озера</span>
-        <Link to="/" className={styles.return}>
-          Вернуться
-          <br />к домам <Arrow direction="left" />
-        </Link>
-        <p>
-          Временная обложка сгенерирована.
-          <br />В галерее — реальные фотографии дома.
-        </p>
-      </footer>
     </article>
   )
 }

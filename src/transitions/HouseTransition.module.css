@@ -1,7 +1,7 @@
 .layer {
   position: fixed;
   inset: 0;
-  z-index: 30;
+  z-index: 60;
   pointer-events: none;
 }
 .frame {
@@ -9,4 +9,9 @@
   overflow: hidden;
   background: var(--forest);
   will-change: width, height, transform;
+}
+
+.returnFrame {
+  position: absolute;
+  inset: 0;
 }

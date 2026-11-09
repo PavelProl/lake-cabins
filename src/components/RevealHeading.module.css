@@ -1,0 +1,9 @@
+.mask {
+  display: block;
+  overflow: hidden;
+  padding: 0.12em 0.04em;
+  margin: -0.06em -0.04em;
+}
+.mask > span {
+  display: block;
+}

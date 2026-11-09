@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router'
 import type { House } from '../data/houses'
+import { RevealHeading } from './RevealHeading'
 import { Arrow } from './Arrow'
 import { PhotoViewer } from './PhotoViewer'
 import styles from './HouseGallery.module.css'
@@ -72,72 +74,74 @@ export function HouseGallery({ house }: { house: House }) {
     <section className={styles.gallery} aria-labelledby="gallery-heading">
       <div className={styles.heading}>
         <div>
-          <p className="eyebrow">Дом в деталях</p>
-          <h2 id="gallery-heading">
-            Рассмотреть
-            <br />
-            поближе.
-          </h2>
+          <p className="eyebrow" data-reveal>
+            Дом в деталях
+          </p>
+          <RevealHeading id="gallery-heading" lines={['Рассмотреть', 'поближе.']} />
         </div>
       </div>
-      <div
-        ref={rail}
-        data-photo-rail
-        className={styles.rail}
-        tabIndex={0}
-        role="region"
-        aria-label="Фотографии дома, можно прокручивать по горизонтали"
-      >
-        {house.gallery.map((photo, index) => (
-          <figure key={photo.src} className={styles.photo}>
-            <button
-              className={styles.openPhoto}
-              aria-label={`Открыть фото: ${photo.alt}`}
-              aria-haspopup="dialog"
-              onClick={() => setOpenedPhoto(index)}
-            >
-              <img
-                src={photo.src}
-                alt={photo.alt}
-                loading="lazy"
-                decoding="async"
-                width={photo.width}
-                height={photo.height}
-              />
-            </button>
-            <figcaption>
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              {photo.alt.split(':')[0]}
-            </figcaption>
-          </figure>
-        ))}
-      </div>
-      <div className={styles.controls}>
-        <span className={styles.counter} aria-live="polite" title="Номер выбранной фотографии">
-          {String(navigation.active + 1).padStart(2, '0')} /{' '}
-          {String(house.gallery.length).padStart(2, '0')}
-        </span>
-        <button
-          className="round-button"
-          onClick={() => move(-1)}
-          disabled={!navigation.canPrevious}
-          aria-label="Предыдущее фото"
+      <div className={styles.stage}>
+        <div
+          ref={rail}
+          data-photo-rail
+          className={styles.rail}
+          tabIndex={0}
+          role="region"
+          aria-label="Фотографии дома, можно прокручивать по горизонтали"
         >
-          <Arrow direction="left" />
-        </button>
-        <button
-          className="round-button"
-          onClick={() => move(1)}
-          disabled={!navigation.canNext}
-          aria-label="Следующее фото"
-        >
-          <Arrow direction="right" />
-        </button>
+          {house.gallery.map((photo, index) => (
+            <figure key={photo.src} className={styles.photo}>
+              <button
+                className={styles.openPhoto}
+                aria-label={`Открыть фото: ${photo.alt}`}
+                aria-haspopup="dialog"
+                onClick={() => setOpenedPhoto(index)}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  loading="lazy"
+                  decoding="async"
+                  width={photo.width}
+                  height={photo.height}
+                />
+              </button>
+              <figcaption>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                {photo.alt.split(':')[0]}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <div className={styles.controls}>
+          <span className={styles.counter} aria-live="polite" title="Номер выбранной фотографии">
+            {String(navigation.active + 1).padStart(2, '0')} /{' '}
+            {String(house.gallery.length).padStart(2, '0')}
+          </span>
+          <button
+            className="round-button"
+            onClick={() => move(-1)}
+            disabled={!navigation.canPrevious}
+            aria-label="Предыдущее фото"
+          >
+            <Arrow direction="left" />
+          </button>
+          <button
+            className="round-button"
+            onClick={() => move(1)}
+            disabled={!navigation.canNext}
+            aria-label="Следующее фото"
+          >
+            <Arrow direction="right" />
+          </button>
+        </div>
       </div>
-      <p className={styles.note}>
-        Здесь — реальные фотографии дома и интерьера, подготовленные для сайта. Профессиональная
-        съёмка появится позже.
+      <p className={styles.note} data-reveal>
+        На фотографиях — настоящий дом и его интерьер. Нажмите на снимок, чтобы рассмотреть детали.
       </p>
+      <Link to="/" className={styles.return}>
+        <Arrow direction="left" /> Вернуться к домам
+      </Link>
       {openedPhoto !== null && (
         <PhotoViewer
           photos={house.gallery}

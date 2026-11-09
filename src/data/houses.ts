@@ -50,6 +50,7 @@ export interface House {
   titleLines: readonly string[]
   category: string
   description: string
+  area?: number
   cover: string
   coverPosition: number
   gallery: readonly { src: string; alt: string; width: number; height: number }[]
@@ -58,11 +59,12 @@ export interface House {
 export const houses: readonly House[] = [
   {
     id: 'large-log-house',
-    name: 'Большой бревенчатый дом',
-    titleLines: ['Большой', 'дом'],
-    category: 'Бревенчатый дом',
+    name: 'Усадьба Парная',
+    titleLines: ['Усадьба', 'Парная'],
+    category: 'Бревенчатый дом · 164 м²',
+    area: 164,
     description:
-      'Бревенчатые стены, деревянные лестницы и большие окна. В галерее — реальные фотографии фасада и комнат большого дома.',
+      'Просторный бревенчатый дом у озера Парное. Деревянные стены, большие окна и место, чтобы собраться за одним столом. Дом стоит отдельно, на участке 15 соток — для неспешных дней в кругу близких.',
     cover: largeCover,
     coverPosition: 57,
     gallery: [
@@ -119,11 +121,12 @@ export const houses: readonly House[] = [
   },
   {
     id: 'medium-house',
-    name: 'Средний дом с баней',
-    titleLines: ['Средний', 'дом'],
-    category: 'С собственной баней',
+    name: 'Лад',
+    titleLines: ['Лад'],
+    category: 'С собственной баней · 76 м²',
+    area: 76,
     description:
-      'Дом с собственной баней, деревянной отделкой и большими окнами. В галерее можно рассмотреть фасад, комнаты и интерьер среднего дома.',
+      'Домик у озера с собственной баней. Свет из больших окон, тёплая деревянная отделка и вечера без спешки. Здесь легко оставить городские заботы за порогом и побыть вместе.',
     cover: mediumCover,
     coverPosition: 73,
     gallery: [
@@ -215,11 +218,11 @@ export const houses: readonly House[] = [
   },
   {
     id: 'small-house',
-    name: 'Малый дом',
-    titleLines: ['Малый', 'дом'],
+    name: 'Тишь и Гладь',
+    titleLines: ['Тишь и', 'Гладь'],
     category: 'Два одинаковых дома',
     description:
-      'Два одинаковых малых дома с асимметричной крышей и крытой террасой. В галерее — реальные фотографии дома снаружи и внутри.',
+      'Два одинаковых домика у озера для спокойного отдыха. Деревянный интерьер, большие окна и терраса, на которой хочется задержаться. Выберите даты, а мы подскажем, какой из домов свободен.',
     cover: smallCover,
     coverPosition: 57,
     gallery: [

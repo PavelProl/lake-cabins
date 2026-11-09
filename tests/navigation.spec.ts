@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 import type { Page } from '@playwright/test'
 
 const houseUrl = '/houses/large-log-house'
-const houseName = 'Большой бревенчатый дом'
+const houseName = 'Усадьба Парная'
 
 async function expectHouse(page: Page) {
   await expect(page).toHaveURL(new RegExp(`${houseUrl}$`))
@@ -20,6 +20,7 @@ test('opening and return preserve the selected card, scroll and focus', async ({
   const errors: string[] = []
   page.on('pageerror', (error) => errors.push(error.message))
   await page.goto('/')
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   const card = page.getByRole('link', { name: `Открыть: ${houseName}` })
   await card.scrollIntoViewIfNeeded()
   const scrollBefore = await page.evaluate(() => scrollY)
@@ -39,6 +40,7 @@ test('opening and return preserve the selected card, scroll and focus', async ({
 
 test('browser Back and Forward preserve working navigation', async ({ page }) => {
   await page.goto('/')
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   await page.locator('#house-large-log-house').click()
   await expectHouse(page)
   await page.goBack()
@@ -49,6 +51,7 @@ test('browser Back and Forward preserve working navigation', async ({ page }) =>
 
 test('a direct house URL and return work without a preceding catalog visit', async ({ page }) => {
   await page.goto(houseUrl)
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   await expectHouse(page)
   await page.getByRole('link', { name: 'Все дома', exact: true }).click()
   await expectCatalog(page)
@@ -57,6 +60,7 @@ test('a direct house URL and return work without a preceding catalog visit', asy
 
 test('gallery navigates each photo and finishes at the right edge', async ({ page }) => {
   await page.goto(houseUrl)
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   const gallery = page.getByRole('region', {
     name: 'Фотографии дома, можно прокручивать по горизонтали',
   })
@@ -124,6 +128,7 @@ test('gallery navigates each photo and finishes at the right edge', async ({ pag
 test('gallery keeps the first photo selected when the viewport changes', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 })
   await page.goto(houseUrl)
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   const gallery = page.getByRole('region', {
     name: 'Фотографии дома, можно прокручивать по горизонтали',
   })
@@ -139,6 +144,7 @@ test('gallery keeps the first photo selected when the viewport changes', async (
 test('reduced motion and keyboard activation remain usable', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto('/')
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   const card = page.locator('#house-large-log-house')
   await card.focus()
   await page.keyboard.press('Enter')
@@ -152,6 +158,7 @@ test('reduced motion and keyboard activation remain usable', async ({ page }) =>
 
 test('rapid repeat activation does not create duplicate history entries', async ({ page }) => {
   await page.goto('/')
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   await page.locator('#house-large-log-house').dblclick({ delay: 30 })
   await expectHouse(page)
   await page.goBack()
@@ -162,6 +169,7 @@ test('Back during an opening transition restores scroll and focus without a stal
   page,
 }) => {
   await page.goto('/')
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   const card = page.locator('#house-large-log-house')
   await card.scrollIntoViewIfNeeded()
   const scrollBefore = await page.evaluate(() => scrollY)
@@ -190,6 +198,7 @@ test('Back during an opening transition restores scroll and focus without a stal
 
 test('resizing during opening leaves a responsive full-screen hero', async ({ page }) => {
   await page.goto('/')
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   await page.locator('#house-large-log-house').click()
   await page.setViewportSize({ width: 600, height: 900 })
   await expectHouse(page)
@@ -201,6 +210,7 @@ test('resizing during opening leaves a responsive full-screen hero', async ({ pa
 
 test('an unknown house has a useful route back to the catalog', async ({ page }) => {
   await page.goto('/houses/unknown')
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   await expect(page.getByRole('heading', { name: 'Этой страницы пока нет.' })).toBeVisible()
   await page.getByRole('link', { name: 'Вернуться к домам', exact: true }).click()
   await expectCatalog(page)
@@ -208,6 +218,7 @@ test('an unknown house has a useful route back to the catalog', async ({ page })
 
 test('return from the house footer restores the catalog scroll and focus', async ({ page }) => {
   await page.goto('/')
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   const card = page.locator('#house-large-log-house')
   await card.scrollIntoViewIfNeeded()
   const scrollBefore = await page.evaluate(() => scrollY)
@@ -223,6 +234,7 @@ test('return from the house footer restores the catalog scroll and focus', async
 
 test('Forward during closing cancels the overlay and allows another return', async ({ page }) => {
   await page.goto('/')
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   await page.locator('#house-large-log-house').click()
   await expectHouse(page)
   await page.clock.install()
@@ -246,6 +258,7 @@ test('enabling reduced motion during opening finishes and cleans up the transiti
   page,
 }) => {
   await page.goto('/')
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   await page.locator('#house-large-log-house').click()
   await expect(page.locator('[data-transition-phase]')).toHaveAttribute(
     'data-transition-phase',

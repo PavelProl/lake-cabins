@@ -1,12 +1,11 @@
 import { useRef } from 'react'
-import type { RefObject } from 'react'
 import gsap from 'gsap'
 import { Flip } from 'gsap/Flip'
 import { useGSAP } from '@gsap/react'
 import type { Location } from 'react-router'
 import type { House } from '../data/houses'
 import { HouseVisual } from '../components/HouseVisual'
-import { measureVisual } from './geometry'
+import { lockPageScroll } from './scrollLock'
 import type { Box } from './geometry'
 import styles from './HouseTransition.module.css'
 
@@ -22,11 +21,11 @@ export interface TransitionRequest {
 
 interface HouseTransitionProps {
   request: TransitionRequest
-  destinationRef: RefObject<HTMLDivElement | null>
+  onCovered: () => void
   onComplete: () => void
 }
 
-export function HouseTransition({ request, destinationRef, onComplete }: HouseTransitionProps) {
+export function HouseTransition({ request, onCovered, onComplete }: HouseTransitionProps) {
   const frame = useRef<HTMLDivElement>(null)
 
   useGSAP(
@@ -34,34 +33,44 @@ export function HouseTransition({ request, destinationRef, onComplete }: HouseTr
       const element = frame.current
       if (!element) return
       const root = document.documentElement
-      const previousOverflow = root.style.overflow
-      root.style.overflow = 'hidden'
+      const releaseScroll = lockPageScroll()
       let active = true
       const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)')
 
+      const complete = () =>
+        queueMicrotask(() => {
+          if (active) onComplete()
+        })
+      let animation: gsap.core.Animation
       if (request.direction === 'closing') {
-        if (request.returnScroll !== null)
-          window.scrollTo({ top: request.returnScroll, behavior: 'instant' })
-        else destinationRef.current?.scrollIntoView({ block: 'center', behavior: 'instant' })
+        let covered = false
+        const cover = () => {
+          if (!covered && active) {
+            covered = true
+            onCovered()
+          }
+        }
+        animation = gsap
+          .timeline({ onComplete: complete })
+          .to(element, { duration: 0.01 })
+          .call(cover)
+      } else {
+        gsap.set(element, request.from)
+        const state = Flip.getState(element, { props: 'borderRadius' })
+        gsap.set(element, {
+          left: 0,
+          top: 0,
+          width: root.clientWidth,
+          height: innerHeight,
+          borderRadius: '0px',
+        })
+        animation = Flip.from(state, {
+          duration: reducedMotion.matches ? 0 : 0.65,
+          ease: 'power2.inOut',
+          scale: false,
+          onComplete: complete,
+        })
       }
-
-      gsap.set(element, request.from)
-      const state = Flip.getState(element, { props: 'borderRadius' })
-      const target =
-        request.direction === 'closing' && destinationRef.current
-          ? measureVisual(destinationRef.current)
-          : { left: 0, top: 0, width: root.clientWidth, height: innerHeight, borderRadius: '0px' }
-
-      gsap.set(element, target)
-      const animation = Flip.from(state, {
-        duration: reducedMotion.matches ? 0 : request.direction === 'opening' ? 0.55 : 0.65,
-        ease: request.direction === 'opening' ? 'power1.out' : 'power2.inOut',
-        scale: false,
-        onComplete: () =>
-          queueMicrotask(() => {
-            if (active) onComplete()
-          }),
-      })
 
       const finish = () => animation.progress(1)
       window.addEventListener('resize', finish)
@@ -70,17 +79,21 @@ export function HouseTransition({ request, destinationRef, onComplete }: HouseTr
         active = false
         window.removeEventListener('resize', finish)
         reducedMotion.removeEventListener('change', finish)
-        root.style.overflow = previousOverflow
+        releaseScroll()
       }
     },
-    { scope: frame, dependencies: [request, onComplete, destinationRef], revertOnUpdate: true },
+    { scope: frame, dependencies: [request, onComplete, onCovered], revertOnUpdate: true },
   )
 
   return (
     <div className={styles.layer} aria-hidden="true" data-transition-layer>
-      <div ref={frame} className={styles.frame}>
-        <HouseVisual house={request.house} heading="div" />
-      </div>
+      {request.direction === 'closing' ? (
+        <div ref={frame} className={styles.returnFrame} />
+      ) : (
+        <div ref={frame} className={styles.frame}>
+          <HouseVisual house={request.house} heading="div" />
+        </div>
+      )}
     </div>
   )
 }

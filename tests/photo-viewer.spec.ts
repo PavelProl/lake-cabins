@@ -7,6 +7,7 @@ const viewer = (page: Page) => page.getByRole('dialog', { name: 'Просмот�
 
 async function openPhoto(page: Page, index = 0) {
   await page.goto(houseUrl)
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   const button = photoButtons(page).nth(index)
   await button.scrollIntoViewIfNeeded()
   await expect
@@ -46,6 +47,7 @@ test('photo opens by keyboard, traps focus, locks the background and restores sc
   page,
 }) => {
   await page.goto(houseUrl)
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   const photo = photoButtons(page).first()
   await photo.scrollIntoViewIfNeeded()
   await photo.focus()
@@ -110,6 +112,7 @@ test('opening and closing animate from and to the actual photo without changing 
 }) => {
   await page.clock.install()
   await page.goto(houseUrl)
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   const button = photoButtons(page).first()
   await button.scrollIntoViewIfNeeded()
   await expect
@@ -146,6 +149,7 @@ test('opening and closing animate from and to the actual photo without changing 
 test('Escape during opening and repeated actions leave no locked page', async ({ page }) => {
   await page.clock.install()
   await page.goto(houseUrl)
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   await photoButtons(page).first().scrollIntoViewIfNeeded()
   await page.clock.pauseAt(new Date(Date.now() + 1000))
   await photoButtons(page)
@@ -212,10 +216,9 @@ test('route navigation while viewing removes the modal and restores page styles'
   page,
 }) => {
   await page.goto('/')
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   await page.locator('#house-large-log-house').click()
-  await expect(
-    page.getByRole('heading', { name: 'Большой бревенчатый дом', exact: true }),
-  ).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Усадьба Парная', exact: true })).toBeVisible()
   await photoButtons(page).first().scrollIntoViewIfNeeded()
   await photoButtons(page).first().click()
   await page.goBack()
@@ -228,6 +231,7 @@ test('route navigation while viewing removes the modal and restores page styles'
 
 test('a landscape photo fits without cropping in the same viewer', async ({ page }) => {
   await page.goto('/houses/medium-house')
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   const photo = photoButtons(page).first()
   await photo.scrollIntoViewIfNeeded()
   await photo.click()
@@ -280,6 +284,7 @@ test('photo and controls stay within the visible mobile viewport after page zoom
   test.skip(!isMobile, 'Page scale is exercised in mobile emulation')
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto(houseUrl)
+  await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
   await photoButtons(page).first().scrollIntoViewIfNeeded()
   const session = await page.context().newCDPSession(page)
   await session.send('Emulation.setPageScaleFactor', { pageScaleFactor: 1.5 })

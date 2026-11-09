@@ -95,3 +95,22 @@
     font-size: 11px;
   }
 }
+
+@media (min-width: 701px) {
+  .navigation button {
+    position: fixed;
+    top: calc(50% - 28px);
+    width: 56px;
+    height: 56px;
+    background: #101916;
+  }
+  .navigation button:first-child {
+    left: 24px;
+  }
+  .navigation button:last-child {
+    right: 24px;
+  }
+  .caption {
+    font-size: 14px;
+  }
+}

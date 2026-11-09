@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test'
 
 const cases = [
-  { id: 'large-log-house', name: 'Большой бревенчатый дом', count: 9, folder: 'large-house' },
-  { id: 'medium-house', name: 'Средний дом с баней', count: 19, folder: 'medium-house' },
-  { id: 'small-house', name: 'Малый дом', count: 14, folder: 'small-house' },
+  { id: 'large-log-house', name: 'Усадьба Парная', count: 9, folder: 'large-house' },
+  { id: 'medium-house', name: 'Лад', count: 19, folder: 'medium-house' },
+  { id: 'small-house', name: 'Тишь и Гладь', count: 14, folder: 'small-house' },
 ]
 
 for (const house of cases) {
@@ -12,6 +12,7 @@ for (const house of cases) {
   }) => {
     await page.clock.install()
     await page.goto('/')
+    await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
     const card = page.locator(`#house-${house.id}`)
     await card.scrollIntoViewIfNeeded()
     const scroll = await page.evaluate(() => scrollY)
@@ -29,7 +30,7 @@ for (const house of cases) {
     await expect(page).toHaveURL(new RegExp(`/houses/${house.id}$`))
     await expect(page.getByRole('heading', { name: house.name, exact: true })).toBeFocused()
     await expect(layer).toHaveCount(0)
-    await expect(page).toHaveTitle(`${house.name} — Домики у озера`)
+    await expect(page).toHaveTitle(`${house.name} — Роща · домики у озера`)
 
     const photos = page.getByRole('button', { name: /^Открыть фото:/ })
     await expect(photos).toHaveCount(house.count)
@@ -69,6 +70,7 @@ for (const house of cases) {
 
   test(`${house.id}: direct link returns to its corresponding card`, async ({ page }) => {
     await page.goto(`/houses/${house.id}`)
+    await expect(page.getByRole('dialog', { name: 'Добро пожаловать в Рощу' })).toHaveCount(0)
     await expect(page.getByRole('heading', { name: house.name, exact: true })).toBeVisible()
     await page.getByRole('link', { name: 'Все дома', exact: true }).click()
     const card = page.locator(`#house-${house.id}`)

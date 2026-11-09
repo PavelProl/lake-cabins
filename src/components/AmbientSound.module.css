@@ -1,0 +1,44 @@
+.sound {
+  position: relative;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid rgb(255 255 255 / 40%);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font-size: 14px;
+}
+.toggle:hover,
+.toggle[aria-pressed='true'] {
+  background: rgb(120 140 120 / 18%);
+}
+.toggle svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+.status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media (max-width: 1000px) {
+  .toggle {
+    padding: 10px;
+  }
+  .toggle span {
+    display: none;
+  }
+}

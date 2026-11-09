@@ -24,19 +24,36 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.25s;
+  pointer-events: none;
+  z-index: 2;
+}
+.cursorFace {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
   background: var(--lime);
   color: var(--ink);
-  transform: translate(-50%, -50%) scale(0.7);
-  opacity: 0;
-  transition:
-    transform 0.3s,
-    opacity 0.3s;
-  pointer-events: none;
+  transform: scale(0.7);
+  transition: transform 0.3s;
 }
 .card:hover .open,
 .card:focus-visible .open {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+}
+.card:hover .cursorFace,
+.card:focus-visible .cursorFace {
+  transform: scale(1);
+}
+.card .cursorFace {
+  position: absolute;
+  left: -32px;
+  top: -32px;
+  margin: 0;
 }
 .mobileLink {
   display: none;
@@ -70,7 +87,48 @@
 
 @media (prefers-reduced-motion: reduce) {
   .open,
+  .cursorFace,
   .card [data-shade] {
+    transition: none;
+  }
+}
+
+@media (min-width: 900px) and (hover: hover) {
+  .card [data-amenities] {
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .card:hover [data-amenities],
+  .card:focus-visible [data-amenities] {
+    opacity: 0.85;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card [data-amenities] {
+    transition: none;
+  }
+}
+
+@media (min-width: 900px) and (hover: hover) and (pointer: fine) {
+  .card:hover {
+    cursor: none;
+  }
+  .open {
+    top: 0;
+    left: 0;
+    transform: translate(var(--cursor-x, 50vw), var(--cursor-y, 240px));
+    transition:
+      opacity 0.25s,
+      transform 0.16s ease-out;
+  }
+  .card:focus-visible .open {
+    top: 50%;
+    left: 50%;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .open {
     transition: none;
   }
 }

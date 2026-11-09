@@ -35,7 +35,6 @@ export function HouseVisual({
         height="941"
       />
       <div className={styles.shade} data-shade />
-      <span className={styles.concept}>Сгенерированная концепция</span>
       <Heading
         className={styles.title}
         aria-label={house.name}
@@ -51,12 +50,15 @@ export function HouseVisual({
         ))}
       </Heading>
       <div className={styles.caption}>
-        <span className={styles.category}>{house.category}</span>
-        <span className={styles.captionText}>
-          Ближе к природе.
-          <br />
-          Ближе друг к другу.
+        <span className={styles.concept} data-caption-left>
+          Сгенерированная концепция
         </span>
+        <div className={styles.details} data-caption-right>
+          <span className={styles.category}>{house.category}</span>
+          <span className={styles.amenities} data-amenities>
+            Wi-Fi · Отопление · Кухня · Холодильник
+          </span>
+        </div>
       </div>
     </div>
   )

@@ -9,7 +9,7 @@
   margin-bottom: 28px;
 }
 .heading h2 {
-  font-size: clamp(48px, 6.5vw, 76px);
+  font-size: clamp(52px, 7vw, 96px);
   line-height: 0.98;
   letter-spacing: -0.055em;
   font-weight: 400;
@@ -26,7 +26,7 @@
   min-width: 7ch;
   margin-right: 12px;
   text-align: center;
-  font-size: 12px;
+  font-size: 16px;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
@@ -70,7 +70,7 @@
   gap: 18px;
   padding-top: 16px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 16px;
   line-height: 1.5;
 }
 .photo figcaption span {
@@ -82,7 +82,7 @@
   margin-top: 22px;
   max-width: 480px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 16px;
   line-height: 1.6;
 }
 
@@ -97,5 +97,50 @@
   }
   .rail {
     gap: 14px;
+  }
+}
+
+.stage {
+  position: relative;
+}
+@media (min-width: 701px) {
+  .stage {
+    padding-inline: 64px;
+  }
+  .controls > button {
+    position: absolute;
+    top: max(0px, calc(min(26svh, 240px) - 24px));
+    background: var(--paper);
+  }
+  .controls > button:nth-of-type(1) {
+    left: 0;
+  }
+  .controls > button:nth-of-type(2) {
+    right: 0;
+  }
+  .photo img {
+    max-width: calc(100vw - 2 * var(--gutter) - 128px);
+  }
+}
+
+.return {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  font-size: 17px;
+  text-decoration: none;
+}
+.return svg {
+  width: 24px;
+  height: 24px;
+}
+
+.heading > div {
+  min-width: 0;
+}
+@media (max-width: 700px) {
+  .heading h2 {
+    font-size: clamp(38px, 10.8vw, 64px);
   }
 }

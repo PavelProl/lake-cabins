@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import gsap from 'gsap'
 import type { House } from '../data/houses'
+import { lockPageScroll } from '../transitions/scrollLock'
 import { Arrow } from './Arrow'
 import styles from './PhotoViewer.module.css'
 
@@ -30,10 +31,8 @@ export function PhotoViewer({ photos, initialIndex, sourceAt, onClose }: PhotoVi
     const picture = image.current!
     const shade = background.current!
     const toolbar = controls.current!
-    const root = document.documentElement
     const body = document.body
     const scroll = { x: scrollX, y: scrollY }
-    const overflow = root.style.overflow
     const bodyStyles = {
       position: body.style.position,
       top: body.style.top,
@@ -86,7 +85,8 @@ export function PhotoViewer({ photos, initialIndex, sourceAt, onClose }: PhotoVi
       const origin = modal.getBoundingClientRect()
       const top = closeButton.current!.getBoundingClientRect().bottom - origin.top + 16
       const bottom = footer.current!.getBoundingClientRect().top - origin.top - 16
-      const availableWidth = Math.max(1, modal.clientWidth - 40)
+      const sideSpace = matchMedia('(min-width: 701px)').matches ? 176 : 40
+      const availableWidth = Math.max(1, modal.clientWidth - sideSpace)
       const availableHeight = Math.max(1, bottom - top)
       const item = photos[current]
       const scale = Math.min(availableWidth / item.width, availableHeight / item.height)
@@ -208,7 +208,7 @@ export function PhotoViewer({ photos, initialIndex, sourceAt, onClose }: PhotoVi
 
     modal.showModal()
     setPhase('opening')
-    root.style.overflow = 'hidden'
+    const releaseScroll = lockPageScroll()
     body.style.position = 'fixed'
     body.style.top = `${-scroll.y}px`
     body.style.width = '100%'
@@ -243,7 +243,7 @@ export function PhotoViewer({ photos, initialIndex, sourceAt, onClose }: PhotoVi
       motion.removeEventListener('change', settle)
       revealSource()
       modal.close()
-      root.style.overflow = overflow
+      releaseScroll()
       Object.assign(body.style, bodyStyles)
       window.scrollTo({ left: scroll.x, top: scroll.y, behavior: 'instant' })
       sourceAt(current)?.focus({ preventScroll: true })

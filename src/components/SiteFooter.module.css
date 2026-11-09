@@ -1,0 +1,98 @@
+.footer {
+  padding: 36px var(--gutter) 24px;
+  color: var(--paper);
+  background: var(--forest);
+  text-align: center;
+}
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding-bottom: 24px;
+}
+.brand {
+  font-family: var(--heading-font);
+  font-size: 34px;
+  line-height: 1.2;
+  text-decoration: none;
+}
+.brand span,
+.phones span {
+  display: block;
+  font:
+    14px/1.5 Onest,
+    sans-serif;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+.top nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 28px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.top nav a {
+  text-underline-offset: 5px;
+}
+.phones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 40px;
+}
+.phones > a {
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 1.4;
+}
+.bottom {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  max-width: 900px;
+  margin: 0 auto;
+  border-top: 1px solid #607469;
+  padding-top: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+@media (max-width: 700px) {
+  .footer {
+    padding-top: 28px;
+  }
+  .top {
+    gap: 18px;
+  }
+  .top nav {
+    font-size: 14px;
+    gap: 12px 18px;
+  }
+  .phones {
+    gap: 14px 24px;
+  }
+  .phones > a {
+    font-size: 16px;
+  }
+  .phones span {
+    font-size: 12px;
+  }
+  .bottom {
+    flex-direction: column;
+  }
+}
+
+.soundHint {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
