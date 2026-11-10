@@ -5,3 +5,11 @@ dist/
 test-results/
 playwright-report/
 *.tsbuildinfo
+
+# Локальные исходники, рабочие материалы и личные инструкции
+/Фото домиков/
+/output/
+/CLAUDE.md
+/docs/owner-questions.md
+/docs/research-2026-10.md
+/docs/retrospective-2026-11.md
