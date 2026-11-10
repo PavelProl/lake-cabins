@@ -13,3 +13,6 @@ playwright-report/
 /docs/owner-questions.md
 /docs/research-2026-10.md
 /docs/retrospective-2026-11.md
+
+# Локальное рабочее состояние; не публикуется
+/.local/
