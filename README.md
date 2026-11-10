@@ -1,8 +1,8 @@
-# lake-cabins — «Роща»
+# project-grove — «Роща»
 
 Фронтенд сайта реальной базы отдыха у озера Парное в Красноярском крае. Посетитель может посмотреть дома и фотографии, найти базу на карте и связаться с владельцами по телефону или в WhatsApp.
 
-[Открыть демо](https://glistening-muffin-53b0fe.netlify.app/)
+[Открыть демо](https://project-grove.netlify.app/) · [Репозиторий](https://github.com/PavelProl/project-grove)
 
 ## Возможности
 
@@ -63,5 +63,5 @@ npm run test:e2e
 
 - [Продуктовый бриф](docs/project-brief.md) — требования, материалы и открытые вопросы.
 - [План](docs/PLAN.md) — текущая задача, следующие шаги и точка продолжения.
-- [Issues](https://github.com/PavelProl/lake-cabins/issues) и [закрытые PR](https://github.com/PavelProl/lake-cabins/pulls?q=is%3Apr+is%3Aclosed) — задачи и история изменений.
+- [Issues](https://github.com/PavelProl/project-grove/issues) и [закрытые PR](https://github.com/PavelProl/project-grove/pulls?q=is%3Apr+is%3Aclosed) — задачи и история изменений.
 - [Правила работы](AGENTS.md) и [процесс разработки](docs/development.md).
