@@ -61,6 +61,7 @@ npm run test:e2e
 
 ## Документация и задачи
 
-- [Продуктовый бриф](docs/project-brief.md) — требования, TODO, материалы и открытые вопросы.
+- [Продуктовый бриф](docs/project-brief.md) — требования, материалы и открытые вопросы.
+- [План](docs/PLAN.md) — текущая задача, следующие шаги и точка продолжения.
 - [Issues](https://github.com/PavelProl/lake-cabins/issues) и [закрытые PR](https://github.com/PavelProl/lake-cabins/pulls?q=is%3Apr+is%3Aclosed) — задачи и история изменений.
 - [Правила работы](AGENTS.md) и [процесс разработки](docs/development.md).
